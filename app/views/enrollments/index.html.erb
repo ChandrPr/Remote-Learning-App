@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all enrollments
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new enrollment
+    </h2>
+
+    <form action="/insert_enrollment" method="post">
+      <div>
+        <label for="topic_id_box">
+          Topic
+        </label>
+
+        <input type="text" id="topic_id_box" name="query_topic_id">
+      </div>
+
+      <div>
+        <label for="student_id_box">
+          Student
+        </label>
+
+        <input type="text" id="student_id_box" name="query_student_id">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status">
+      </div>
+
+      <div>
+        <label for="grade_box">
+          Grade
+        </label>
+
+        <input type="text" id="grade_box" name="query_grade">
+      </div>
+
+      <button>
+        Create enrollment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Topic
+        </th>
+
+        <th>
+          Student
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Grade
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_enrollments.each do |an_enrollment| %>
+      <tr>
+        <td>
+          <%= an_enrollment.id %>
+        </td>
+
+        <td>
+          <%= an_enrollment.topic_id %>
+        </td>
+
+        <td>
+          <%= an_enrollment.student_id %>
+        </td>
+
+        <td>
+          <%= an_enrollment.status %>
+        </td>
+
+        <td>
+          <%= an_enrollment.grade %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_enrollment.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_enrollment.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/enrollments/<%= an_enrollment.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

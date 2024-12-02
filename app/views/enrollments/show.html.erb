@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Enrollment #<%= @the_enrollment.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/enrollments">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_enrollment/<%= @the_enrollment.id %>">
+          Delete enrollment
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Topic
+      </dt>
+      <dd>
+        <%= @the_enrollment.topic_id %>
+      </dd>
+
+      <dt>
+        Student
+      </dt>
+      <dd>
+        <%= @the_enrollment.student_id %>
+      </dd>
+
+      <dt>
+        Status
+      </dt>
+      <dd>
+        <%= @the_enrollment.status %>
+      </dd>
+
+      <dt>
+        Grade
+      </dt>
+      <dd>
+        <%= @the_enrollment.grade %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_enrollment.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_enrollment.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit enrollment
+    </h2>
+
+    <form action="/modify_enrollment/<%= @the_enrollment.id %>"  method="post" >
+      <div>
+        <label for="topic_id_box">
+          Topic
+        </label>
+
+        <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_enrollment.topic_id %>">
+      </div>
+
+      <div>
+        <label for="student_id_box">
+          Student
+        </label>
+
+        <input type="text" id="student_id_box" name="query_student_id" value="<%= @the_enrollment.student_id %>">
+      </div>
+
+      <div>
+        <label for="status_box">
+          Status
+        </label>
+
+        <input type="text" id="status_box" name="query_status" value="<%= @the_enrollment.status %>">
+      </div>
+
+      <div>
+        <label for="grade_box">
+          Grade
+        </label>
+
+        <input type="text" id="grade_box" name="query_grade" value="<%= @the_enrollment.grade %>">
+      </div>
+
+      <button>
+        Update enrollment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
