@@ -1,19 +1,11 @@
 class QuestionsController < ApplicationController
   def index
-    matching_questions = Question.all
-
-    @list_of_questions = matching_questions.order({ :created_at => :desc })
-
+    @list_of_questions = Question.all.order({ :created_at => :desc })
     render({ :template => "questions/index" })
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_questions = Question.where({ :id => the_id })
-
-    @the_question = matching_questions.at(0)
-
+    @the_question = Question.where({ :id => params["path_id"] }).first
     render({ :template => "questions/show" })
   end
 
@@ -34,9 +26,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_question = Question.where({ :id => the_id }).at(0)
-
+    the_question = Question.where({ :id => params["path_id"] }).first
     the_question.enrollment_id = params.fetch("query_enrollment_id")
     the_question.body = params.fetch("query_body")
     the_question.student_answer = params.fetch("query_student_answer")
@@ -52,11 +42,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_question = Question.where({ :id => the_id }).at(0)
-
-    the_question.destroy
-
+    Question.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/questions", { :notice => "Question deleted successfully."} )
   end
 end

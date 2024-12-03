@@ -1,19 +1,11 @@
 class TopicsController < ApplicationController
   def index
-    matching_topics = Topic.all
-
-    @list_of_topics = matching_topics.order({ :created_at => :desc })
-
+    @list_of_topics = Topic.all.order({ :created_at => :desc })
     render({ :template => "topics/index" })
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_topics = Topic.where({ :id => the_id })
-
-    @the_topic = matching_topics.at(0)
-
+    @the_topic = Topic.where({ :id => params["path_id"] }).first
     render({ :template => "topics/show" })
   end
 
@@ -22,7 +14,6 @@ class TopicsController < ApplicationController
     the_topic.name = params.fetch("query_name")
     the_topic.instructor_id = params.fetch("query_instructor_id")
     the_topic.isactive = params.fetch("query_isactive", false)
-    the_topic.enrollments_count = params.fetch("query_enrollments_count")
 
     if the_topic.valid?
       the_topic.save
@@ -33,13 +24,10 @@ class TopicsController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_topic = Topic.where({ :id => the_id }).at(0)
-
+    the_topic = Topic.where({ :id => params["path_id"] }).first
     the_topic.name = params.fetch("query_name")
     the_topic.instructor_id = params.fetch("query_instructor_id")
     the_topic.isactive = params.fetch("query_isactive", false)
-    the_topic.enrollments_count = params.fetch("query_enrollments_count")
 
     if the_topic.valid?
       the_topic.save
@@ -50,11 +38,7 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_topic = Topic.where({ :id => the_id }).at(0)
-
-    the_topic.destroy
-
+    Topic.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/topics", { :notice => "Topic deleted successfully."} )
   end
 end

@@ -3,7 +3,6 @@
 # Table name: instructors
 #
 #  id                     :bigint           not null, primary key
-#  courses_count          :integer
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  name                   :string

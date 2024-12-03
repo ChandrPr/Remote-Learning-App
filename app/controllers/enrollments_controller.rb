@@ -1,19 +1,11 @@
 class EnrollmentsController < ApplicationController
   def index
-    matching_enrollments = Enrollment.all
-
-    @list_of_enrollments = matching_enrollments.order({ :created_at => :desc })
-
+    @list_of_enrollments = Enrollment.all.order({ :created_at => :desc })
     render({ :template => "enrollments/index" })
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_enrollments = Enrollment.where({ :id => the_id })
-
-    @the_enrollment = matching_enrollments.at(0)
-
+    @the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
     render({ :template => "enrollments/show" })
   end
 
@@ -33,9 +25,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_enrollment = Enrollment.where({ :id => the_id }).at(0)
-
+    the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
     the_enrollment.topic_id = params.fetch("query_topic_id")
     the_enrollment.student_id = params.fetch("query_student_id")
     the_enrollment.status = params.fetch("query_status")
@@ -50,11 +40,7 @@ class EnrollmentsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_enrollment = Enrollment.where({ :id => the_id }).at(0)
-
-    the_enrollment.destroy
-
+    Enrollment.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/enrollments", { :notice => "Enrollment deleted successfully."} )
   end
 end

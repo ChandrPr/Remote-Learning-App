@@ -3,7 +3,6 @@
 # Table name: topics
 #
 #  id                :bigint           not null, primary key
-#  enrollments_count :integer
 #  isactive          :boolean
 #  name              :string
 #  created_at        :datetime         not null

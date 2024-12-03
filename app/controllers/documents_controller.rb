@@ -1,19 +1,11 @@
 class DocumentsController < ApplicationController
   def index
-    matching_documents = Document.all
-
-    @list_of_documents = matching_documents.order({ :created_at => :desc })
-
+    @list_of_documents = Document.all.order({ :created_at => :desc })
     render({ :template => "documents/index" })
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_documents = Document.where({ :id => the_id })
-
-    @the_document = matching_documents.at(0)
-
+    @the_document = Document.where({ :id => params["path_id"] }).first
     render({ :template => "documents/show" })
   end
 
@@ -30,9 +22,7 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
-    the_document = Document.where({ :id => the_id }).at(0)
-
+    the_document = Document.where({ :id => params["path_id"] }).first
     the_document.topic_id = params.fetch("query_topic_id")
 
     if the_document.valid?
@@ -44,11 +34,7 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
-    the_document = Document.where({ :id => the_id }).at(0)
-
-    the_document.destroy
-
+    Document.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/documents", { :notice => "Document deleted successfully."} )
   end
 end
