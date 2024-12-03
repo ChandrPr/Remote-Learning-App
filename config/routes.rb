@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
   root "courses#index"
-  devise_for :students
-  devise_for :instructors
+  devise_for :students, controllers: {
+    sessions: 'students/sessions'
+  }
+  devise_for :instructors, controllers: {
+    sessions: 'instructors/sessions'
+  }
 
   # COURSE
   post("/insert_course", { :controller => "courses", :action => "create" })
