@@ -7,8 +7,8 @@
 
   <form action="/insert_document" method="post">
     <div>
-      <label for="topic_id_box">Topic</label>
-      <input type="text" id="topic_id_box" name="query_topic_id">
+      <label for="course_id_box">Course</label>
+      <input type="text" id="course_id_box" name="query_course_id">
     </div>
 
     <button>Create document</button>
@@ -20,7 +20,7 @@
 <table border="1">
   <tr>
     <th>ID</th>
-    <th>Topic</th>
+    <th>Course</th>
     <th>Created at</th>
     <th>Updated at</th>
     <th></th>
@@ -29,7 +29,7 @@
   <% @list_of_documents.each do |a_document| %>
   <tr>
     <td><%= a_document.id %></td>
-    <td><%= a_document.topic_id %></td>
+    <td><%= a_document.course_id %></td>
     <td><%= time_ago_in_words(a_document.created_at) %> ago</td>
     <td><%= time_ago_in_words(a_document.updated_at) %> ago</td>
     <td><a href="/documents/<%= a_document.id %>">Show details</a></td>

@@ -11,7 +11,7 @@ class EnrollmentsController < ApplicationController
 
   def create
     the_enrollment = Enrollment.new
-    the_enrollment.topic_id = params.fetch("query_topic_id")
+    the_enrollment.course_id = params.fetch("query_course_id")
     the_enrollment.student_id = params.fetch("query_student_id")
     the_enrollment.status = params.fetch("query_status")
     the_enrollment.grade = params.fetch("query_grade")
@@ -26,7 +26,7 @@ class EnrollmentsController < ApplicationController
 
   def update
     the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
-    the_enrollment.topic_id = params.fetch("query_topic_id")
+    the_enrollment.course_id = params.fetch("query_course_id")
     the_enrollment.student_id = params.fetch("query_student_id")
     the_enrollment.status = params.fetch("query_status")
     the_enrollment.grade = params.fetch("query_grade")

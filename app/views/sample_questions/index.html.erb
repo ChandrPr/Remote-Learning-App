@@ -12,8 +12,8 @@
     </div>
 
     <div>
-      <label for="topic_id_box">Topic</label>
-      <input type="text" id="topic_id_box" name="query_topic_id">
+      <label for="course_id_box">Course</label>
+      <input type="text" id="course_id_box" name="query_course_id">
     </div>
 
     <button>Create sample question</button>
@@ -26,7 +26,7 @@
   <tr>
     <th>ID</th>
     <th>Question body</th>
-    <th>Topic</th>
+    <th>Course</th>
     <th>Created at</th>
     <th>Updated at</th>
     <th></th>
@@ -36,7 +36,7 @@
   <tr>
     <td><%= a_sample_question.id %></td>
     <td><%= a_sample_question.question_body %></td>
-    <td><%= a_sample_question.topic_id %></td>
+    <td><%= a_sample_question.course_id %></td>
     <td><%= time_ago_in_words(a_sample_question.created_at) %> ago</td>
     <td><%= time_ago_in_words(a_sample_question.updated_at) %> ago</td>
     <td><a href="/sample_questions/<%= a_sample_question.id %>">Show details</a></td>

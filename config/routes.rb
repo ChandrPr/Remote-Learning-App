@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
 
-  root "topics#index"
+  root "courses#index"
   devise_for :students
   devise_for :instructors
 
-  # TOPIC
-  post("/insert_topic", { :controller => "topics", :action => "create" })
-  get("/topics", { :controller => "topics", :action => "index" })
-  get("/topics/:path_id", { :controller => "topics", :action => "show" })
-  post("/modify_topic/:path_id", { :controller => "topics", :action => "update" })
-  get("/delete_topic/:path_id", { :controller => "topics", :action => "destroy" })
+  # COURSE
+  post("/insert_course", { :controller => "courses", :action => "create" })
+  get("/courses", { :controller => "courses", :action => "index" })
+  get("/courses/:path_id", { :controller => "courses", :action => "show" })
+  post("/modify_course/:path_id", { :controller => "courses", :action => "update" })
+  get("/delete_course/:path_id", { :controller => "courses", :action => "destroy" })
   #------------------------------
 
   # ENROLLMENT

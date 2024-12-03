@@ -6,8 +6,8 @@
 </div>
 
 <dl>
-  <dt>Topic</dt>
-  <dd><%= @the_document.topic_id %></dd>
+  <dt>Course</dt>
+  <dd><%= @the_document.course_id %></dd>
 
   <dt>Created at</dt>
   <dd><%= time_ago_in_words(@the_document.created_at) %> ago</dd>
@@ -23,8 +23,8 @@
 
   <form action="/modify_document/<%= @the_document.id %>"  method="post" >
     <div>
-      <label for="topic_id_box">Topic</label>
-      <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_document.topic_id %>">
+      <label for="course_id_box">Course</label>
+      <input type="text" id="course_id_box" name="query_course_id" value="<%= @the_document.course_id %>">
     </div>
     
     <button>Update document</button>

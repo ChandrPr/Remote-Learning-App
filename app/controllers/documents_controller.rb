@@ -11,7 +11,7 @@ class DocumentsController < ApplicationController
 
   def create
     the_document = Document.new
-    the_document.topic_id = params.fetch("query_topic_id")
+    the_document.course_id = params.fetch("query_course_id")
 
     if the_document.valid?
       the_document.save
@@ -23,7 +23,7 @@ class DocumentsController < ApplicationController
 
   def update
     the_document = Document.where({ :id => params["path_id"] }).first
-    the_document.topic_id = params.fetch("query_topic_id")
+    the_document.course_id = params.fetch("query_course_id")
 
     if the_document.valid?
       the_document.save

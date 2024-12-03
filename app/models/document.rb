@@ -5,12 +5,12 @@
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  topic_id   :integer
+#  course_id  :integer
 #
 class Document < ApplicationRecord
 
-  validates :topic_id, presence: true
+  validates :course_id, presence: true
   
-  belongs_to :topic
+  belongs_to :course
 
 end

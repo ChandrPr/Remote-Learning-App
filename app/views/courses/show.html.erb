@@ -1,0 +1,50 @@
+<h1>Course #<%= @the_course.id %> details</h1>
+
+<div>
+  <a href="/courses">Go back</a>
+  <a href="/delete_course/<%= @the_course.id %>">Delete course</a>
+</div>
+
+<dl>
+  <dt>Name</dt>
+  <dd><%= @the_course.name %></dd>
+
+  <dt>Instructor</dt>
+  <dd><%= @the_course.instructor_id %></dd>
+
+  <dt>Isactive</dt>
+  <dd><%= @the_course.isactive %></dd>
+
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@the_course.created_at) %> ago</dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@the_course.updated_at) %> ago</dd>
+</dl>
+
+<hr>
+
+<div>
+  <h2>Edit course</h2>
+
+  <form action="/modify_course/<%= @the_course.id %>"  method="post" >
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name" value="<%= @the_course.name %>">
+    </div>
+
+    <div>
+      <label for="instructor_id_box">Instructor</label>
+      <input type="text" id="instructor_id_box" name="query_instructor_id" value="<%= @the_course.instructor_id %>">
+    </div>
+
+    <div>
+      <input type="checkbox" id="isactive_box" name="query_isactive" value="1" <%= "checked" if @the_course.isactive %>>
+      <label for="isactive_box">Isactive</label>
+    </div>
+
+    <button>Update course</button>
+  </form>
+</div>
+
+<hr>

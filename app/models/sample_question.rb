@@ -6,10 +6,10 @@
 #  question_body :text
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  topic_id      :integer
+#  course_id      :integer
 #
 class SampleQuestion < ApplicationRecord
 
-  belongs_to :topic
+  belongs_to :course
 
 end

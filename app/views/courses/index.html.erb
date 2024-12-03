@@ -1,11 +1,11 @@
-<h1>List of all topics</h1>
+<h1>List of all courses</h1>
 
 <hr>
 
 <div>
-  <h2>Add a new topic</h2>
+  <h2>Add a new course</h2>
 
-  <form action="/insert_topic" method="post">
+  <form action="/insert_course" method="post">
     <div>
       <label for="name_box">Name</label>
       <input type="text" id="name_box" name="query_name">
@@ -21,7 +21,7 @@
       <label for="isactive_box">Isactive</label>
     </div>
 
-    <button>Create topic</button>
+    <button>Create course</button>
   </form>
 </div>
 
@@ -38,15 +38,15 @@
     <th></th>
   </tr>
 
-  <% @list_of_topics.each do |a_topic| %>
+  <% @list_of_courses.each do |a_course| %>
   <tr>
-    <td><%= a_topic.id %></td>
-    <td><%= a_topic.name %></td>
-    <td><%= a_topic.instructor_id %></td>
-    <td><%= a_topic.isactive %></td>
-    <td><%= time_ago_in_words(a_topic.created_at) %> ago</td>
-    <td><%= time_ago_in_words(a_topic.updated_at) %> ago</td>
-    <td><a href="/topics/<%= a_topic.id %>">Show details</a></td>
+    <td><%= a_course.id %></td>
+    <td><%= a_course.name %></td>
+    <td><%= a_course.instructor_id %></td>
+    <td><%= a_course.isactive %></td>
+    <td><%= time_ago_in_words(a_course.created_at) %> ago</td>
+    <td><%= time_ago_in_words(a_course.updated_at) %> ago</td>
+    <td><a href="/courses/<%= a_course.id %>">Show details</a></td>
   </tr>
   <% end %>
 </table>

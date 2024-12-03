@@ -12,7 +12,7 @@ class SampleQuestionsController < ApplicationController
   def create
     the_sample_question = SampleQuestion.new
     the_sample_question.question_body = params.fetch("query_question_body")
-    the_sample_question.topic_id = params.fetch("query_topic_id")
+    the_sample_question.course_id = params.fetch("query_course_id")
 
     if the_sample_question.valid?
       the_sample_question.save
@@ -25,7 +25,7 @@ class SampleQuestionsController < ApplicationController
   def update
     the_sample_question = SampleQuestion.where({ :id => params["path_id"] }).first
     the_sample_question.question_body = params.fetch("query_question_body")
-    the_sample_question.topic_id = params.fetch("query_topic_id")
+    the_sample_question.course_id = params.fetch("query_course_id")
 
     if the_sample_question.valid?
       the_sample_question.save

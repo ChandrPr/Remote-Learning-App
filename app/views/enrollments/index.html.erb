@@ -7,8 +7,8 @@
 
   <form action="/insert_enrollment" method="post">
     <div>
-      <label for="topic_id_box">Topic</label>
-      <input type="text" id="topic_id_box" name="query_topic_id">
+      <label for="course_id_box">Course</label>
+      <input type="text" id="course_id_box" name="query_course_id">
     </div>
 
     <div>
@@ -35,7 +35,7 @@
 <table border="1">
   <tr>
     <th>ID</th>
-    <th>Topic</th>
+    <th>Course</th>
     <th>Student</th>
     <th>Status</th>
     <th>Grade</th>
@@ -47,7 +47,7 @@
   <% @list_of_enrollments.each do |an_enrollment| %>
   <tr>
     <td><%= an_enrollment.id %></td>
-    <td><%= an_enrollment.topic_id %></td>
+    <td><%= an_enrollment.course_id %></td>
     <td><%= an_enrollment.student_id %></td>
     <td><%= an_enrollment.status %></td>
     <td><%= an_enrollment.grade %></td>
