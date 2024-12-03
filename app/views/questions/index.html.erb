@@ -1,150 +1,68 @@
-<div>
-  <div>
-    <h1>
-      List of all questions
-    </h1>
-  </div>
-</div>
+<h1>List of all questions</h1>
 
 <hr>
 
 <div>
-  <div>
-    <h2>
-      Add a new question
-    </h2>
+  <h2>Add a new question</h2>
 
-    <form action="/insert_question" method="post">
-      <div>
-        <label for="enrollment_id_box">
-          Enrollment
-        </label>
+  <form action="/insert_question" method="post">
+    <div>
+      <label for="enrollment_id_box">Enrollment</label>
+      <input type="text" id="enrollment_id_box" name="query_enrollment_id">
+    </div>
 
-        <input type="text" id="enrollment_id_box" name="query_enrollment_id">
-      </div>
+    <div>
+      <label for="body_box">Body</label>
+      <textarea id="body_box" name="query_body" rows="3"></textarea>
+    </div>
 
-      <div>
-        <label for="body_box">
-          Body
-        </label>
+    <div>
+      <label for="student_answer_box">Student answer</label>
+      <textarea id="student_answer_box" name="query_student_answer" rows="3"></textarea>
+    </div>
 
-        <textarea id="body_box" name="query_body" rows="3"></textarea>
-      </div>
+    <div>
+      <label for="feedback_box">Feedback</label>
+      <textarea id="feedback_box" name="query_feedback" rows="3"></textarea>
+    </div>
 
-      <div>
-        <label for="student_answer_box">
-          Student answer
-        </label>
+    <div>
+      <label for="score_box">Score</label>
+      <input type="text" id="score_box" name="query_score">
+    </div>
 
-        <textarea id="student_answer_box" name="query_student_answer" rows="3"></textarea>
-      </div>
-
-      <div>
-        <label for="feedback_box">
-          Feedback
-        </label>
-
-        <textarea id="feedback_box" name="query_feedback" rows="3"></textarea>
-      </div>
-
-      <div>
-        <label for="score_box">
-          Score
-        </label>
-
-        <input type="text" id="score_box" name="query_score">
-      </div>
-
-      <button>
-        Create question
-      </button>
-    </form>
-  </div>
+    <button>Create question</button>
+  </form>
 </div>
 
 <hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
 
-        <th>
-          Enrollment
-        </th>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Enrollment</th>
+    <th>Body</th>
+    <th>Student answer</th>
+    <th>Feedback</th>
+    <th>Score</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+    <th></th>
+  </tr>
 
-        <th>
-          Body
-        </th>
-
-        <th>
-          Student answer
-        </th>
-
-        <th>
-          Feedback
-        </th>
-
-        <th>
-          Score
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_questions.each do |a_question| %>
-      <tr>
-        <td>
-          <%= a_question.id %>
-        </td>
-
-        <td>
-          <%= a_question.enrollment_id %>
-        </td>
-
-        <td>
-          <%= a_question.body %>
-        </td>
-
-        <td>
-          <%= a_question.student_answer %>
-        </td>
-
-        <td>
-          <%= a_question.feedback %>
-        </td>
-
-        <td>
-          <%= a_question.score %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_question.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_question.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/questions/<%= a_question.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
+  <% @list_of_questions.each do |a_question| %>
+  <tr>
+    <td><%= a_question.id %></td>
+    <td><%= a_question.enrollment_id %></td>
+    <td><%= a_question.body %></td>
+    <td><%= a_question.student_answer %></td>
+    <td><%= a_question.feedback %></td>
+    <td><%= a_question.score %></td>
+    <td><%= time_ago_in_words(a_question.created_at) %> ago</td>
+    <td><%= time_ago_in_words(a_question.updated_at) %> ago</td>
+    <td><a href="/questions/<%= a_question.id %>">Show details</a></td>
+  </tr>
+  <% end %>
+</table>
 
 <hr>

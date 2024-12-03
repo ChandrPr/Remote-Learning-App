@@ -1,71 +1,34 @@
+<h1>Document #<%= @the_document.id %> details</h1>
+
 <div>
-  <div>
-    <h1>
-      Document #<%= @the_document.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/documents">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_document/<%= @the_document.id %>">
-          Delete document
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Topic
-      </dt>
-      <dd>
-        <%= @the_document.topic_id %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_document.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_document.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
+  <a href="/documents">Go back</a>
+  <a href="/delete_document/<%= @the_document.id %>">Delete document</a>
 </div>
+
+<dl>
+  <dt>Topic</dt>
+  <dd><%= @the_document.topic_id %></dd>
+
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@the_document.created_at) %> ago</dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@the_document.updated_at) %> ago</dd>
+</dl>
 
 <hr>
 
-
 <div>
-  <div>
-    <h2>
-      Edit document
-    </h2>
+  <h2>Edit document</h2>
 
-    <form action="/modify_document/<%= @the_document.id %>"  method="post" >
-      <div>
-        <label for="topic_id_box">
-          Topic
-        </label>
-
-        <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_document.topic_id %>">
-      </div>
-
-      <button>
-        Update document
-      </button>
-    </form>
-  </div>
+  <form action="/modify_document/<%= @the_document.id %>"  method="post" >
+    <div>
+      <label for="topic_id_box">Topic</label>
+      <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_document.topic_id %>">
+    </div>
+    
+    <button>Update document</button>
+  </form>
 </div>
 
 <hr>

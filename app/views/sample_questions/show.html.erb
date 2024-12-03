@@ -1,86 +1,42 @@
+<h1>Sample question #<%= @the_sample_question.id %> details</h1>
+
 <div>
-  <div>
-    <h1>
-      Sample question #<%= @the_sample_question.id %> details
-    </h1>
-
-    <div>
-      <div>
-        <a href="/sample_questions">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_sample_question/<%= @the_sample_question.id %>">
-          Delete sample question
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Question body
-      </dt>
-      <dd>
-        <%= @the_sample_question.question_body %>
-      </dd>
-
-      <dt>
-        Topic
-      </dt>
-      <dd>
-        <%= @the_sample_question.topic_id %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_sample_question.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_sample_question.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
+  <a href="/sample_questions">Go back</a>
+  <a href="/delete_sample_question/<%= @the_sample_question.id %>">Delete sample question</a>
 </div>
+
+<dl>
+  <dt>Question body</dt>
+  <dd><%= @the_sample_question.question_body %></dd>
+
+  <dt>Topic</dt>
+  <dd><%= @the_sample_question.topic_id %></dd>
+
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@the_sample_question.created_at) %> ago</dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@the_sample_question.updated_at) %> ago</dd>
+</dl>
 
 <hr>
 
-
 <div>
-  <div>
-    <h2>
-      Edit sample question
-    </h2>
+  <h2>Edit sample question</h2>
 
-    <form action="/modify_sample_question/<%= @the_sample_question.id %>"  method="post" >
-      <div>
-        <label for="question_body_box">
-          Question body
-        </label>
+  <form action="/modify_sample_question/<%= @the_sample_question.id %>"  method="post" >
+    <div>
+      <label for="question_body_box">Question body</label>
+      <textarea id="question_body_box" name="query_question_body"><%= @the_sample_question.question_body %></textarea>
+    </div>
 
-        <textarea id="question_body_box" name="query_question_body"><%= @the_sample_question.question_body %></textarea>
-      </div>
+    <div>
+      <label for="topic_id_box">Topic</label>
+      <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_sample_question.topic_id %>">
+    </div>
 
-      <div>
-        <label for="topic_id_box">
-          Topic
-        </label>
-
-        <input type="text" id="topic_id_box" name="query_topic_id" value="<%= @the_sample_question.topic_id %>">
-      </div>
-
-      <button>
-        Update sample question
-      </button>
-    </form>
-  </div>
+    <button>Update sample question</button>
+  </form>
 </div>
 
 <hr>
