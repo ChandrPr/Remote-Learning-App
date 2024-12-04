@@ -2,7 +2,9 @@
 
 <div>
   <a href="/student_home">Go back</a>
-  <a href="/delete_enrollment/<%= @the_enrollment.id %>">Delete enrollment</a>
+  <% if student_signed_in? && current_student.id == @the_enrollment.student_id %>
+    <a href="/delete_enrollment/<%= @the_enrollment.id %>">Delete enrollment</a>
+  <% end %>
 </div>
 
 <dl>
@@ -15,8 +17,11 @@
   <dt>Status</dt>
   <dd><%= @the_enrollment.status %></dd>
 
-  <dt>Grade</dt>
-  <dd><%= @the_enrollment.grade %></dd>
+
+  <% if (student_signed_in? && current_student.id == @the_enrollment.student_id) || (instructor_signed_in? && current_instructor.id == @the_enrollment.course.instructor_id) %>
+    <dt>Grade</dt>
+    <dd><%= @the_enrollment.grade %></dd>
+  <% end %>
 
   <dt>Created at</dt>
   <dd><%= time_ago_in_words(@the_enrollment.created_at) %> ago</dd>
@@ -27,32 +32,36 @@
 
 <hr>
 
+
+<% if @the_enrollment.course.instructor_id == current_instructor.id %>
 <div>
-  <h2>Edit enrollment</h2>
+  <h2>Grade student</h2>
 
   <form action="/modify_enrollment/<%= @the_enrollment.id %>"  method="post" >
     <div>
-      <label for="course_id_box">Course</label>
-      <input type="text" id="course_id_box" name="query_course_id" value="<%= @the_enrollment.course_id %>">
-    </div>
-
-    <div>
-      <label for="student_id_box">Student</label>
-      <input type="text" id="student_id_box" name="query_student_id" value="<%= @the_enrollment.student_id %>">
+      <input type="hidden" id="course_id_box" name="query_course_id" value="<%= @the_enrollment.course_id %>">
+      <input type="hidden" id="student_id_box" name="query_student_id" value="<%= @the_enrollment.student_id %>">
     </div>
 
     <div>
       <label for="status_box">Status</label>
-      <input type="text" id="status_box" name="query_status" value="<%= @the_enrollment.status %>">
+      <select name="query_status" id="status_box">
+        <option value="In Progress">In Progress</option>
+        <option value="On Hold">On Hold</option>
+        <option value="Passed">Passed</option>
+        <option value="Failed">Failed</option>
+        <option value="Incomplete">Incomplete</option>
+      </select>
     </div>
 
     <div>
       <label for="grade_box">Grade</label>
-      <input type="text" id="grade_box" name="query_grade" value="<%= @the_enrollment.grade %>">
+      <input type="number" id="grade_box" name="query_grade" value="<%= @the_enrollment.grade %>">
     </div>
 
     <button>Update enrollment</button>
   </form>
 </div>
+<% end %>
 
 <hr>
