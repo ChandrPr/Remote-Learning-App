@@ -1,7 +1,7 @@
 <h1>Course #<%= @the_course.id %> details</h1>
 
 <div>
-  <a href="/courses">Go back</a>
+  <a href="/instructor_home">Go back</a>
   <a href="/delete_course/<%= @the_course.id %>">Delete course</a>
 </div>
 
@@ -10,7 +10,7 @@
   <dd><%= @the_course.name %></dd>
 
   <dt>Instructor</dt>
-  <dd><%= @the_course.instructor_id %></dd>
+  <dd><%= @the_course.instructor.name %></dd>
 
   <dt>Isactive</dt>
   <dd><%= @the_course.isactive %></dd>

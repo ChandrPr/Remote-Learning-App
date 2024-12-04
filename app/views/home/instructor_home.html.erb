@@ -1,5 +1,31 @@
 <h1>Instructor Home</h1>
 
+<hr>
+
+<div>
+  <h2>Create a new course</h2>
+
+  <form action="/insert_course" method="post">
+    <div>
+      <label for="name_box">Name</label>
+      <input type="text" id="name_box" name="query_name">
+    </div>
+
+    <div>
+      <input type="checkbox" id="isactive_box" name="query_isactive" checked>
+      <label for="isactive_box">Is Active</label>
+    </div>
+
+    <div>
+      <input type="hidden" id="instructor_id_box" name="query_instructor_id" value="<%= current_instructor.id %>">
+    </div>
+
+    <button>Create course</button>
+  </form>
+</div>
+
+<hr>
+
 <table border="1">
   <tr>
     <th>ID</th>
@@ -15,7 +41,7 @@
   <tr>
     <td><%= course.id %></td>
     <td><%= course.name %></td>
-    <td><%= course.instructor_id %></td>
+    <td><%= course.instructor.name %></td>
     <td><%= course.isactive %></td>
     <td><%= time_ago_in_words(course.created_at) %> ago</td>
     <td><%= time_ago_in_words(course.updated_at) %> ago</td>

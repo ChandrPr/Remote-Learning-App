@@ -17,9 +17,9 @@ class CoursesController < ApplicationController
 
     if the_course.valid?
       the_course.save
-      redirect_to("/courses", { :notice => "Course created successfully." })
+      redirect_to("/courses/#{the_course.id}", { :notice => "Course created successfully." })
     else
-      redirect_to("/courses", { :alert => the_course.errors.full_messages.to_sentence })
+      redirect_to("/instructor_home", { :alert => the_course.errors.full_messages.to_sentence })
     end
   end
 
