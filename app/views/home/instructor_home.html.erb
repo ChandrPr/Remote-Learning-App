@@ -1,0 +1,25 @@
+<h1>Instructor Home</h1>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Instructor</th>
+    <th>Isactive</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+    <th></th>
+  </tr>
+
+  <% @courses.each do |course| %>
+  <tr>
+    <td><%= course.id %></td>
+    <td><%= course.name %></td>
+    <td><%= course.instructor_id %></td>
+    <td><%= course.isactive %></td>
+    <td><%= time_ago_in_words(course.created_at) %> ago</td>
+    <td><%= time_ago_in_words(course.updated_at) %> ago</td>
+    <td><a href="/courses/<%= course.id %>">Show details</a></td>
+  </tr>
+  <% end %>
+</table>

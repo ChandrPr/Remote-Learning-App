@@ -1,16 +1,16 @@
 <h1>Enrollment #<%= @the_enrollment.id %> details</h1>
 
 <div>
-  <a href="/enrollments">Go back</a>
+  <a href="/student_home">Go back</a>
   <a href="/delete_enrollment/<%= @the_enrollment.id %>">Delete enrollment</a>
 </div>
 
 <dl>
   <dt>Course</dt>
-  <dd><%= @the_enrollment.course_id %></dd>
+  <dd><%= @the_enrollment.course.name %></dd>
 
   <dt>Student</dt>
-  <dd><%= @the_enrollment.student_id %></dd>
+  <dd><%= @the_enrollment.student.name %></dd>
 
   <dt>Status</dt>
   <dd><%= @the_enrollment.status %></dd>

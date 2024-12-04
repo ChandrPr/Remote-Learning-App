@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
-  root "login#login"
+  root "home#login"
   devise_for :students
   devise_for :instructors
+  
+  get("/student_home", { :controller => "home", :action => "student_home" })
+  get("/instructor_home", { :controller => "home", :action => "instructor_home" })
 
   # COURSE
   post("/insert_course", { :controller => "courses", :action => "create" })

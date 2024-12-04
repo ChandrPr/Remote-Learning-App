@@ -18,9 +18,9 @@ class EnrollmentsController < ApplicationController
 
     if the_enrollment.valid?
       the_enrollment.save
-      redirect_to("/enrollments", { :notice => "Enrollment created successfully." })
+      redirect_to("/student_home", { :notice => "Enrollment created successfully." })
     else
-      redirect_to("/enrollments", { :alert => the_enrollment.errors.full_messages.to_sentence })
+      redirect_to("/student_home", { :alert => the_enrollment.errors.full_messages.to_sentence })
     end
   end
 
