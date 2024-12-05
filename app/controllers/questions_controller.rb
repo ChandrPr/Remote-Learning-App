@@ -19,9 +19,9 @@ class QuestionsController < ApplicationController
 
     if the_question.valid?
       the_question.save
-      redirect_to("/questions", { :notice => "Question created successfully." })
+      redirect_to("/enrollments/#{the_question.enrollment_id}", { :notice => "Question created successfully." })
     else
-      redirect_to("/questions", { :alert => the_question.errors.full_messages.to_sentence })
+      redirect_to("/enrollments/#{the_question.enrollment_id}", { :alert => the_question.errors.full_messages.to_sentence })
     end
   end
 
@@ -42,7 +42,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    Question.where({ :id => params["path_id"] }).first.destroy
-    redirect_to("/questions", { :notice => "Question deleted successfully."} )
+    the_question = Question.where({ :id => params["path_id"] }).first
+    enrollment_id = the_question.enrollment_id
+    the_question.destroy
+    redirect_to("/enrollments/#{enrollment_id}", { :notice => "Question deleted successfully."} )
   end
 end

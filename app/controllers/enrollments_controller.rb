@@ -6,6 +6,7 @@ class EnrollmentsController < ApplicationController
 
   def show
     @the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
+    @questions = Question.where({ :enrollment_id => params["path_id"] }).order({ :created_at => :desc })
     render({ :template => "enrollments/show" })
   end
 

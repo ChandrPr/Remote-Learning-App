@@ -61,5 +61,32 @@
   </form>
 </div>
 <% end %>
-
 <hr>
+
+<% if (student_signed_in? && current_student.id == @the_enrollment.student_id) || (instructor_signed_in? && current_instructor.id == @the_enrollment.course.instructor_id) %>
+<div>
+  <h2>List of Questions</h2>
+
+  <table border="1">
+    <tr>
+      <th>Question</th>
+      <th>Given Answer</th>
+      <th>Feedback</th>
+      <th>Score</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+    </tr>
+
+    <% @questions.each do |question| %>
+    <tr>
+      <td><%= question.body %></td>
+      <td><%= question.student_answer %></td>
+      <td><%= question.feedback %></td>
+      <td><%= question.score %></td>
+      <td><%= time_ago_in_words(question.created_at) %> ago</td>
+      <td><%= time_ago_in_words(question.updated_at) %> ago</td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<% end %>
