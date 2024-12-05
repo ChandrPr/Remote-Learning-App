@@ -6,6 +6,9 @@ class CoursesController < ApplicationController
 
   def show
     @the_course = Course.where({ :id => params["path_id"] }).first
+    @instructors = Instructor.all.order({ :name => :asc })
+    @documents = Document.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
+    @sample_questions = SampleQuestion.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
     render({ :template => "courses/show" })
   end
 

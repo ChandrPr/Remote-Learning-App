@@ -9,7 +9,7 @@
 
 <dl>
   <dt>Course</dt>
-  <dd><%= @the_enrollment.course.name %></dd>
+  <dd><a href="/courses/<%= @the_enrollment.course.id %>"><%= @the_enrollment.course.name %></a></dd>
 
   <dt>Student</dt>
   <dd><%= @the_enrollment.student.name %></dd>

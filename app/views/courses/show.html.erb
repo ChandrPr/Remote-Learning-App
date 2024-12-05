@@ -1,9 +1,27 @@
 <h1>Course #<%= @the_course.id %> details</h1>
+<% if student_signed_in? %>
+<% end %>
 
+<% if instructor_signed_in? %>
 <div>
-  <a href="/instructor_home">Go back</a>
-  <a href="/delete_course/<%= @the_course.id %>">Delete course</a>
+  <a href="/instructor_home">Instructor Home</a>
+  <% if current_instructor.id == @the_course.instructor_id %>
+    <a href="/delete_course/<%= @the_course.id %>">Delete course</a>
+  <% end %>
+<div>
+<% end %>
+
+<% if student_signed_in? %>
+<div>
+  <a href="/student_home">Student Home</a>
+  <% enrollment = Enrollment.where({ :course_id => @the_course.id }).where({ :student_id => current_student.id }).first %>
+  <% if enrollment.nil? %>
+    <a href="/insert_enrollment/<%= @the_course.id %>/<%= current_student.id %>">Enroll in course!</a>
+  <% else %>
+    <a href="/enrollments/<%= enrollment.id %>">Go to Enrollment</a>
+  <% end %>
 </div>
+<% end %>
 
 <dl>
   <dt>Name</dt>
@@ -24,6 +42,7 @@
 
 <hr>
 
+<% if instructor_signed_in? && current_instructor.id == @the_course.instructor_id %>
 <div>
   <h2>Edit course</h2>
 
@@ -35,7 +54,15 @@
 
     <div>
       <label for="instructor_id_box">Instructor</label>
-      <input type="text" id="instructor_id_box" name="query_instructor_id" value="<%= @the_course.instructor_id %>">
+      <select name="query_instructor_id" id="instructor_id_box">
+        <% @instructors.each do |instructor| %>
+          <% if instructor.id == @the_course.instructor_id %>
+            <option value="<%= instructor.id %>" selected><%= instructor.name %></option>
+          <% else %>
+            <option value="<%= instructor.id %>"><%= instructor.name %></option>
+          <% end %>
+        <% end %>
+      </select>
     </div>
 
     <div>
@@ -48,3 +75,91 @@
 </div>
 
 <hr>
+
+<div>
+  <h2>Course Documents</h2>
+
+  <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Doc URL</th>
+      <th>Doctype</th>
+      <th>Upload to LLM?</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th></th>
+    </tr>
+
+    <form action="/insert_document" method="post">
+    <input type="hidden" id="course_id_box" name="query_course_id" value="<%= @the_course.id %>">
+    <tr>
+      <td><input type="text" id="name_box" name="query_name"></td>
+      <td><input type="text" id="doc_url_box" name="query_doc_url"></td>
+      <td>
+        <select name="query_doctype" id="doctype_box">
+          <option value="pdf">PDF</option>
+          <option value="jpeg">JPEG</option>
+          <option value="html">HTML</option>
+          <option value="docx">DOCX</option>
+        </select>
+      </td>
+      <td><input type="checkbox" id="uploadto_llm_box" name="query_uploadto_llm" checked></td>
+      <td></td>
+      <td></td>
+      <td><button>Create document</button></td>
+    </tr>
+    </form>
+
+    <% @documents.each do |document| %>
+    <tr>
+      <td><%= document.name %></td>
+      <td>
+        <% if document.doc_url != "" %>
+          <a href="<%= document.doc_url %>" target="_blank">Link</a>
+        <% end %>
+      </td>
+      <td><%= document.doctype %></td>
+      <td><%= document.uploadto_llm %></td>
+      <td><%= time_ago_in_words(document.created_at) %> ago</td>
+      <td><%= time_ago_in_words(document.updated_at) %> ago</td>
+      <td><a href="/delete_document/<%= document.id %>">Delete</a></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<hr>
+
+<div>
+  <h2>Sample Questions</h2>
+
+  <table border="1">
+    <tr>
+      <th>Question body</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th></th>
+    </tr>
+
+    <form action="/insert_sample_question" method="post">
+    <input type="hidden" id="course_id_box" name="query_course_id" value="<%= @the_course.id %>">
+    <tr>
+      <td><textarea id="question_body_box" name="query_question_body" rows="3"></textarea></td>
+      <td></td>
+      <td></td>
+      <td><button>Create Sample Question</button></td>
+    </tr>
+    </form>
+
+    <% @sample_questions.each do |sample_question| %>
+    <tr>
+      <td><%= sample_question.question_body %></td>
+      <td><%= time_ago_in_words(sample_question.created_at) %> ago</td>
+      <td><%= time_ago_in_words(sample_question.updated_at) %> ago</td>
+      <td><a href="/delete_sample_question/<%= sample_question.id %>">Delete</a></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<hr>
+
+<% end %>

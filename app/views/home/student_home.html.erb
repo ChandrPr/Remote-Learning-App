@@ -18,8 +18,6 @@
 
     <div>
       <input type="hidden" id="student_id_box" name="query_student_id" value="<%= current_student.id %>">
-      <input type="hidden" id="status_box" name="query_status" value="In Progress">
-      <input type="hidden" id="grade_box" name="query_grade" value="0">
     </div>
 
     <button>Create enrollment</button>
@@ -30,7 +28,6 @@
 
 <table border="1">
   <tr>
-    <th>ID</th>
     <th>Course</th>
     <th>Student</th>
     <th>Status</th>
@@ -42,8 +39,7 @@
 
   <% @enrollments.each do |enrollment| %>
   <tr>
-    <td><%= enrollment.id %></td>
-    <td><%= enrollment.course.name %></td>
+    <td><a href="/courses/<%= enrollment.course.id %>"><%= enrollment.course.name %></a></td>
     <td><%= enrollment.student.name %></td>
     <td><%= enrollment.status %></td>
     <td><%= enrollment.grade %></td>

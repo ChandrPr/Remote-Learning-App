@@ -16,9 +16,9 @@ class SampleQuestionsController < ApplicationController
 
     if the_sample_question.valid?
       the_sample_question.save
-      redirect_to("/sample_questions", { :notice => "Sample question created successfully." })
+      redirect_to("/courses/#{the_sample_question.course_id}", { :notice => "Sample question created successfully." })
     else
-      redirect_to("/sample_questions", { :alert => the_sample_question.errors.full_messages.to_sentence })
+      redirect_to("/courses/#{the_sample_question.course_id}", { :alert => the_sample_question.errors.full_messages.to_sentence })
     end
   end
 
@@ -36,7 +36,9 @@ class SampleQuestionsController < ApplicationController
   end
 
   def destroy
-    SampleQuestion.where({ :id => params["path_id"] }).first.destroy
-    redirect_to("/sample_questions", { :notice => "Sample question deleted successfully."} )
+    the_sample_question = SampleQuestion.where({ :id => params["path_id"] }).first
+    course_id = the_sample_question.course_id
+    the_sample_question.destroy
+    redirect_to("/courses/#{course_id}", { :notice => "Sample question deleted successfully."} )
   end
 end

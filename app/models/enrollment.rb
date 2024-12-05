@@ -7,8 +7,8 @@
 #  status     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  course_id  :integer
 #  student_id :integer
-#  course_id   :integer
 #
 class Enrollment < ApplicationRecord
 

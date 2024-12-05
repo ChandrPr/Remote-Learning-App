@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   # ENROLLMENT
   post("/insert_enrollment", { :controller => "enrollments", :action => "create" })
+  get("/insert_enrollment/:query_course_id/:query_student_id", { :controller => "enrollments", :action => "create" })
   get("/enrollments", { :controller => "enrollments", :action => "index" })
   get("/enrollments/:path_id", { :controller => "enrollments", :action => "show" })
   post("/modify_enrollment/:path_id", { :controller => "enrollments", :action => "update" })

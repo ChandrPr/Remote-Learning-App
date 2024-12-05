@@ -2,12 +2,12 @@
 #
 # Table name: courses
 #
-#  id                :bigint           not null, primary key
-#  isactive          :boolean
-#  name              :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  instructor_id     :integer
+#  id            :bigint           not null, primary key
+#  isactive      :boolean
+#  name          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  instructor_id :integer
 #
 class Course < ApplicationRecord
 
