@@ -1,0 +1,10 @@
+STORIES
+- Develop course detail page for students. Allow students to download / view documents. And to post and interact with chatGPT.
+- How best to deal with users uploading documents? Use Active Storage? Or just have URLs and keep it simple.
+- Develop chatGPT integration. Start with standard chatbot.
+- Enhance chatGPT with assistant integration.
+- Evaluate whether current course#show page really just works for the instructor and separate it out for instructor from the student. Student will have ability to download, etc.
+
+BUGS
+- Currently can log in as both a student and an instructor at the same time. Need to log out of one when logged in as another.
+- Student redirect after login doesn't work. It redirects to instructor_home, prompting an instructor login.
