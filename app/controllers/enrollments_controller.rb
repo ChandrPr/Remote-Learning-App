@@ -1,8 +1,4 @@
 class EnrollmentsController < ApplicationController
-  def index
-    @list_of_enrollments = Enrollment.all.order({ :created_at => :desc })
-    render({ :template => "enrollments/index" })
-  end
 
   def show
     @the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
@@ -42,6 +38,6 @@ class EnrollmentsController < ApplicationController
 
   def destroy
     Enrollment.where({ :id => params["path_id"] }).first.destroy
-    redirect_to("/enrollments", { :notice => "Enrollment deleted successfully."} )
+    redirect_to("/student_home", { :notice => "Enrollment deleted successfully."} )
   end
 end
