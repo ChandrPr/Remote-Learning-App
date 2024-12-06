@@ -4,6 +4,8 @@ STORIES
 - Develop chatGPT integration. Start with standard chatbot.
 - Enhance chatGPT with assistant integration.
 - Evaluate whether current course#show page really just works for the instructor and separate it out for instructor from the student. Student will have ability to download, etc.
+- Clean up top navigation menu and show/hide as needed.
+- CSS??
 
 BUGS
 - Currently can log in as both a student and an instructor at the same time. Need to log out of one when logged in as another.
