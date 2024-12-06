@@ -1,10 +1,9 @@
-class CreateTopics < ActiveRecord::Migration[7.1]
+class CreateCourses < ActiveRecord::Migration[7.1]
   def change
-    create_table :topics do |t|
+    create_table :courses do |t|
       t.string :name
       t.integer :instructor_id
       t.boolean :isactive
-      t.integer :enrollments_count
 
       t.timestamps
     end

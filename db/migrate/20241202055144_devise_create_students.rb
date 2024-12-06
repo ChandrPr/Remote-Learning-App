@@ -33,7 +33,6 @@ class DeviseCreateStudents < ActiveRecord::Migration[7.1]
       # t.datetime :locked_at
 
       t.string :name
-      t.integer :enrollments_count
 
       t.timestamps null: false
     end
