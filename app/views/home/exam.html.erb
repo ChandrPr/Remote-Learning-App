@@ -4,67 +4,44 @@
 </div>
 <hr>
 
-<table border="1">
-  <tr>
-    <th>Body</th>
-    <th>Role</th>
-    <th>Score</th>
-    <th>Feedback</th>
-    <th>Created at</th>
-  </tr>
-
-
-  <tr>
-
-    <td><%= message.body %></td>
-    <td><%= message.role %></td>
-    <td><%= message.score %></td>
-    <td><%= message.feedback %></td>
-    <td><%= time_ago_in_words(message.created_at) %> ago</td>
-  </tr>
-  <% end %>
-</table>
-
-
 <div>
-<% @messages.each do |message| %>
-  <% if message.role == "system" %>
   <div>
     <dt>System Message</dt>
-    <dd><%= message.body %>
+    <dd><%= @enrollment.course.system_prompt %>
   </div>
-  <% elsif message.role == "assistant" %>
+<% @enrollment.questions.each do |question| %>
+  <% unless question.feedback.empty? %>
   <div>
-    <% if !message.feedback.empty? %>
-      <dt>Feedback:</dt>
-      <dd><%= message.feedback %></dd>
-    <% end %>
-    <% if !message.score.empty? %>
-      <dt>Score:</dt>
-      <dd><%= message.score %></dd>
-    <% end %>
-    <dt>Question:</dt>
-    <dd><%= message.body %></dd>
+    <dt>Feedback</dt>
+    <dd><%= question.question_body %></dd>
+  </div>
+  <% end %>
+  <div>
+    <dt>Question</dt>
+    <dd><%= question.question_body %></dd>
+  </div>
+  <% unless question.score.empty? %>
+  <div>
+    <dt>Score</dt>
+    <dd><%= question.score %></dd>
+  </div>
+  <% end %>
+
+  <% if question.student_answer.empty? %>
+  <div>
+    <dt>Student Answer</dt>
+    <dd>
+      <form action="/question_update/<%= question.id %>" method="post">
+        <textarea id="body_box" name="query_body" rows="3"></textarea>
+        <button>Create message</button>
+      </form>
+    </dd>
   </div>
   <% else %>
-    <dt>Student Answer:</dt>
-    <dd><%= message.body %>
+  <div>
+    <dt>Student Answer</dt>
+    <dd><%= question.student_answer %></dd>
+  </div>
   <% end %>
 <% end %>
 </div>
-
-
-<dt>Student Answer:</dt>
-<dd>
-<form action="/insert_message" method="post">
-  <div>
-    <input type="hidden" id="enrollment_id_box" name="query_enrollment_id" value="<%= @enrollment.id %>">
-    <input type="hidden" id="role_box" name="query_role" value="user">
-  </div>
-  <div>
-    <label for="body_box">Body</label>
-    <textarea id="body_box" name="query_body" rows="3"></textarea>
-  </div>
-  <button>Create message</button>
-</form>
-</dd>

@@ -21,6 +21,5 @@ class Enrollment < ApplicationRecord
   belongs_to :course
   belongs_to :student
   has_many  :questions, dependent: :destroy
-  has_many  :messages, dependent: :destroy
 
 end

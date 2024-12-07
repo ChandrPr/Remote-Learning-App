@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_07_005448) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_07_154512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_005448) do
     t.boolean "isactive"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "system_prompt"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -72,6 +73,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_07_005448) do
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role"
+    t.text "question_body"
+    t.text "system_prompt"
   end
 
   create_table "sample_questions", force: :cascade do |t|

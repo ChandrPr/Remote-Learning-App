@@ -4,6 +4,7 @@ class CreateCourses < ActiveRecord::Migration[7.1]
       t.string :name
       t.integer :instructor_id
       t.boolean :isactive
+      t.text :system_prompt
 
       t.timestamps
     end

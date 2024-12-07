@@ -5,11 +5,7 @@ Rails.application.routes.draw do
   devise_for :students
   get("/student_home", { :controller => "student", :action => "home" })
   # QUESTION
-  post("/insert_question", { :controller => "student", :action => "question_create" })
-  # MESSAGE
-  post("/insert_message", { :controller => "student", :action => "message_create" })  
-  get("/delete_message/:path_id", { :controller => "student", :action => "message_destroy" })
-  #------------------------------
+  post("/update_question/:path_id", { :controller => "student", :action => "question_create" })
 
   devise_for :instructors
   get("/instructor_home", { :controller => "instructor", :action => "home" })

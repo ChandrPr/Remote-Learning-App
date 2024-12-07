@@ -7,43 +7,53 @@ class StudentController < ApplicationController
     render({ :template => "home/student_home"})
   end
 
-  def question_create
-    the_question = Question.new
-    the_question.enrollment_id = params.fetch("query_enrollment_id")
-    the_question.body = params.fetch("query_body")
+  def question_update
+    the_question = Question.where({ :id => params["path_id"] }).first
     the_question.student_answer = params.fetch("query_student_answer")
-    the_question.feedback = params.fetch("query_feedback")
-    the_question.score = params.fetch("query_score")
 
     if the_question.valid?
       the_question.save
+
+      message_list = []
+
+      message_list.push({
+        "role" => "system",
+        "content" => the_question.enrollment.course.system_prompt
+      })
+
+      the_question.enrollment.questions.order(:created_at).each do |question|
+        unless the_question.question_body.empty?
+          message_list.push({
+            "role" => "assistant",
+            "content" => the_question.question_body
+          })
+        end
+        unless the_question.student_answer.empty?
+          message_list.push({
+            "role" => "user",
+            "content" => the_question.student_answer
+          })
+        end
+      end
+
+      client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY"))
+
+      api_response = client.chat(
+        parameters: {
+          model: ENV.fetch("OPENAI_MODEL"),
+          messages: message_list
+        }
+      )
+
+      new_question = Question.new
+      new_question.enrollment_id = the_question.enrollment_id
+      new_question.question_body = api_response.fetch("choices").at(0).fetch("message").fetch("content")
+      new_question.save
+
       redirect_to("/enrollments/#{the_question.enrollment_id}", { :notice => "Question created successfully." })
     else
       redirect_to("/enrollments/#{the_question.enrollment_id}", { :alert => the_question.errors.full_messages.to_sentence })
     end
-  end
-
-  def message_create
-    the_message = Message.new
-    the_message.enrollment_id = params.fetch("query_enrollment_id")
-    the_message.body = params.fetch("query_body")
-    the_message.role = params.fetch("query_role")
-    the_message.score = params.fetch("query_score")
-    the_message.feedback = params.fetch("query_feedback")
-
-    if the_message.valid?
-      the_message.save
-      redirect_to("/enrollments/#{the_message.enrollment_id}", { :notice => "Message created successfully." })
-    else
-      redirect_to("/enrollments/#{the_message.enrollment_id}", { :alert => the_message.errors.full_messages.to_sentence })
-    end
-  end
-
-  def message_destroy
-    the_message = Message.where({ :id => params[("path_id")] }).first
-    enrollment_id = the_message.enrollment_id
-    the_message.destroy
-    redirect_to("/enrollments/#{enrollment_id}", { :notice => "Message deleted successfully."} )
   end
 
 end

@@ -8,11 +8,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 
-  def after_sign_in_path_for(students)
-    "/student_home"
-  end
-  def after_sign_in_path_for(instructors)
-    "/instructor_home"
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(Student)
+      "/student_home"
+    elsif resource.is_a?(Instructor)
+      "/instructor_home"
+    else
+      super
+    end
   end
 #  def after_sign_out_path_for(student)
 #    "/"
