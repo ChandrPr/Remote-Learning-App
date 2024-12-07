@@ -1,0 +1,36 @@
+<h1>Learning Quiz</h1>
+<div>
+  <a href="/enrollments/<%= message.enrollment_id %>">Return to Enrollment</a>
+</div>
+<hr>
+
+<table border="1">
+  <tr>
+    <th>Body</th>
+    <th>Role</th>
+    <th>Score</th>
+    <th>Feedback</th>
+    <th>Created at</th>
+  </tr>
+
+
+  <tr>
+
+    <td><%= message.body %></td>
+    <td><%= message.role %></td>
+    <td><%= message.score %></td>
+    <td><%= message.feedback %></td>
+    <td><%= time_ago_in_words(message.created_at) %> ago</td>
+  </tr>
+  <% end %>
+</table>
+
+
+<div>
+<% @messages.each do |message| %>
+  <% if message.role == "system" %>
+  <div>
+  </div>
+  <% end %>
+
+</div>

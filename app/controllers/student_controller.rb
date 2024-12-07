@@ -23,4 +23,27 @@ class StudentController < ApplicationController
     end
   end
 
+  def message_create
+    the_message = Message.new
+    the_message.enrollment_id = params.fetch("query_enrollment_id")
+    the_message.body = params.fetch("query_body")
+    the_message.role = params.fetch("query_role")
+    the_message.score = params.fetch("query_score")
+    the_message.feedback = params.fetch("query_feedback")
+
+    if the_message.valid?
+      the_message.save
+      redirect_to("/enrollments/#{the_message.enrollment_id}", { :notice => "Message created successfully." })
+    else
+      redirect_to("/enrollments/#{the_message.enrollment_id}", { :alert => the_message.errors.full_messages.to_sentence })
+    end
+  end
+
+  def message_destroy
+    the_message = Message.where({ :id => params[("path_id")] }).first
+    enrollment_id = the_message.enrollment_id
+    the_message.destroy
+    redirect_to("/enrollments/#{enrollment_id}", { :notice => "Message deleted successfully."} )
+  end
+
 end
