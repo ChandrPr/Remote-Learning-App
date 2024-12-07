@@ -4,6 +4,12 @@
 </div>
 <hr>
 
+<% if @enrollment.questions.count == 0 %>
+<form action="/create_question/<%= @enrollment.id %>" method="post">
+  <button>Begin Exam</button>
+</form>
+<% end %>
+
 <div>
   <div>
     <dt>System Message</dt>
@@ -32,7 +38,7 @@
     <dt>Student Answer</dt>
     <dd>
       <form action="/question_update/<%= question.id %>" method="post">
-        <textarea id="body_box" name="query_body" rows="3"></textarea>
+        <textarea id="student_answer_box" name="query_student_answer" rows="3"></textarea>
         <button>Create message</button>
       </form>
     </dd>

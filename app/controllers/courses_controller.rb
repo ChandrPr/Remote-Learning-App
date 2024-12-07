@@ -17,6 +17,7 @@ class CoursesController < ApplicationController
     the_course.name = params.fetch("query_name")
     the_course.instructor_id = params.fetch("query_instructor_id")
     the_course.isactive = params.fetch("query_isactive", false)
+    the_course.system_prompt = "You are an instructor on #{params.fetch("query_name")}. Ask questions to a student, evaluate their response, provide feedback to the student as well as a score out of 5. This is an exam setting. Do not engage with the student on irrelevant answers. Totally irrelevant or nonsensical answers should get a score of 0."
 
     if the_course.valid?
       the_course.save
