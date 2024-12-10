@@ -1,6 +1,6 @@
 STORIES
+- Update prompt to include sample_questions.
 - Develop course detail page for students. Allow students to download / view documents.
-- How best to deal with users uploading documents? Use Active Storage? Or just have URLs and keep it simple.
 - Enhance chatGPT with assistant integration.
 - Evaluate whether current course#show page really just works for the instructor and separate it out for instructor from the student. Student will have ability to download, etc.
 - Clean up top navigation menu and show/hide as needed.
