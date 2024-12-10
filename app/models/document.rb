@@ -17,7 +17,7 @@ class Document < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: ["course_id"] }
-  validates :doc_url, uniqueness: { scope: ["course_id"], conditions: -> { where.not(doc_url: '') } }
+#  validates :doc_url, uniqueness: { scope: ["course_id"], conditions: -> { where.not(doc_url: '') } }
   validates :course_id, presence: true
   validates :doctype, presence: true
   validates :doctype, inclusion: { in: [ "pdf", "jpeg", "html", "docx" ] }

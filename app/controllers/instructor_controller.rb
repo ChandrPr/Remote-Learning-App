@@ -14,11 +14,11 @@ class InstructorController < ApplicationController
     the_document.doctype = params.fetch("query_doctype")
     the_document.uploadto_llm = params.fetch("query_uploadto_llm")
 
-#    if the_document.valid?
+    if the_document.valid?
       the_document.save
       redirect_to("/courses/#{the_document.course_id}", { :notice => "Document created successfully." })
-#    else
-#      redirect_to("/courses/#{the_document.course_id}", { :alert => the_document.errors.full_messages.to_sentence })
+    else
+      redirect_to("/courses/#{the_document.course_id}", { :alert => the_document.errors.full_messages.to_sentence })
     end
   end
 
