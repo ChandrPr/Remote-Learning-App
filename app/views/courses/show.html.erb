@@ -90,11 +90,11 @@
       <th></th>
     </tr>
 
-    <form action="/insert_document" method="post">
+    <form action="/insert_document" method="post" enctype="multipart/form-data">
     <input type="hidden" id="course_id_box" name="query_course_id" value="<%= @the_course.id %>">
     <tr>
       <td><input type="text" id="name_box" name="query_name"></td>
-      <td><input type="text" id="doc_url_box" name="query_doc_url"></td>
+      <td><input type="file" id="doc_url_box" name="query_doc_url"></td>
       <td>
         <select name="query_doctype" id="doctype_box">
           <option value="pdf">PDF</option>

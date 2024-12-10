@@ -13,6 +13,8 @@
 #
 class Document < ApplicationRecord
 
+  mount_uploader :doc_url, DocumentUploader
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: ["course_id"] }
   validates :doc_url, uniqueness: { scope: ["course_id"], conditions: -> { where.not(doc_url: '') } }

@@ -16,7 +16,7 @@ class Enrollment < ApplicationRecord
   validates :student_id, presence: true
   validates :status, presence: true
   validates :status, inclusion: { in: [ "In Progress", "On Hold", "Passed", "Failed", "Incomplete" ] }
-  validates :grade, numericality: { less_than_or_equal_to: 100, greater_than_or_equal_to: 0 }
+  validates :grade, numericality: { less_than_or_equal_to: 100, greater_than_or_equal_to: 0, allow_blank: true }
 
   belongs_to :course
   belongs_to :student

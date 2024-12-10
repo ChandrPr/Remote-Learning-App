@@ -114,12 +114,22 @@ class StudentController < ApplicationController
     if the_question.valid?
       the_question.save
 
-      num_qns = Question.where({ :enrollment_id => the_question.enrollment_id }).count
-      if num_qns < 5
+      qns = Question.where({ :enrollment_id => the_question.enrollment_id })
+      num_qns = qns.count
+      if num_qns < 6
         new_question = Question.new
         new_question.enrollment_id = the_question.enrollment_id
         new_question.question_body = structured_output["new_question"]
         new_question.save
+      elsif num_qns = 6
+        enrollment = Enrollment.where({ :id => the_question.enrollment_id }).first
+        enrollment.grade = qns.sum(:score)
+        if qns.sum(:score) >= 21
+          enrollment.status = 'Passed'
+        else
+          enrollment.status = 'Failed'
+        end
+        enrollment.save
       end
 
       redirect_to("/exam/#{the_question.enrollment_id}", { :notice => "Question created successfully." })
