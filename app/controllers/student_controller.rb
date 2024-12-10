@@ -12,6 +12,53 @@ class StudentController < ApplicationController
     render({ :template => "home/exam"})
   end
 
+  def JSON_OpenAIcall(message_list)
+
+    request_headers_hash = {
+      "Authorization" => "Bearer #{ENV.fetch("OPENAI_API_KEY")}",
+      "content-type" => "application/json"
+    }
+
+    schema_from_generator = '{
+      "name": "question_answer_format",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "feedback": { "type": "string", "description": "Text response providing feedback on the previous question." },
+          "score": { "type": "number", "description": "Score out of 5 for the previous question." },
+          "new_question": { "type": "string", "description": "The new question to be presented." }
+        },
+        "required": [ "feedback", "score", "new_question" ],
+        "additionalProperties": false
+      },
+      "strict": true
+    }'
+
+    response_format = JSON.parse("{
+      \"type\": \"json_schema\",
+      \"json_schema\": #{schema_from_generator}
+    }")
+
+    request_body_hash = {
+      "model" => "gpt-4o-mini",
+      "response_format" => response_format,
+      "messages" => message_list
+    }
+
+    request_body_json = JSON.generate(request_body_hash)
+
+    # Make the API call
+    raw_response = HTTP.headers(request_headers_hash).post(
+      "https://api.openai.com/v1/chat/completions",
+      :body => request_body_json
+    ).to_s
+
+    # Parse the response JSON into a Ruby Hash
+    parsed_response = JSON.parse(raw_response)
+    message_content = parsed_response.dig("choices", 0, "message", "content")
+    JSON.parse(message_content)
+  end
+
   def question_create
     @the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
 
@@ -20,21 +67,17 @@ class StudentController < ApplicationController
     { "role" => "user", "content" => "Ask the first question."}
     ]
 
-    client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY"))
-
-    api_response = client.chat(
-      parameters: {
-        model: ENV.fetch("OPENAI_MODEL"),
-        messages: message_list
-      }
-    )
+    structured_output = JSON_OpenAIcall(message_list)
 
     new_question = Question.new
     new_question.enrollment_id = @the_enrollment.id
-    new_question.question_body = api_response.fetch("choices").at(0).fetch("message").fetch("content")
-    new_question.save
-
-    redirect_to("/exam/#{@the_enrollment_id}", { :notice => "Question created successfully." })
+    new_question.question_body = structured_output["new_question"]
+    if new_question.valid?
+      new_question.save
+      redirect_to("/exam/#{@the_enrollment.id}", { :notice => "Question created successfully." })
+    else
+      redirect_to("/exam/#{@the_enrollment.id}", { :alert => new_question.errors.full_messages.to_sentence })
+    end
   end
 
 
@@ -42,44 +85,42 @@ class StudentController < ApplicationController
     the_question = Question.where({ :id => params["path_id"] }).first
     the_question.student_answer = params.fetch("query_student_answer")
 
+    message_list = []
+    message_list.push({
+      "role" => "system",
+      "content" => the_question.enrollment.course.system_prompt
+    })
+
+    the_question.enrollment.questions.order(:created_at).each do |question|
+      unless the_question.question_body.empty?
+        message_list.push({
+          "role" => "assistant",
+          "content" => the_question.question_body
+        })
+      end
+      unless the_question.student_answer.empty?
+        message_list.push({
+          "role" => "user",
+          "content" => the_question.student_answer
+        })
+      end
+    end
+
+    structured_output = JSON_OpenAIcall(message_list)
+
+    the_question.feedback = structured_output["feedback"]
+    the_question.score = structured_output["score"]
+
     if the_question.valid?
       the_question.save
 
-      message_list = []
-
-      message_list.push({
-        "role" => "system",
-        "content" => the_question.enrollment.course.system_prompt
-      })
-
-      the_question.enrollment.questions.order(:created_at).each do |question|
-        unless the_question.question_body.empty?
-          message_list.push({
-            "role" => "assistant",
-            "content" => the_question.question_body
-          })
-        end
-        unless the_question.student_answer.empty?
-          message_list.push({
-            "role" => "user",
-            "content" => the_question.student_answer
-          })
-        end
+      num_qns = Question.where({ :enrollment_id => the_question.enrollment_id }).count
+      if num_qns < 5
+        new_question = Question.new
+        new_question.enrollment_id = the_question.enrollment_id
+        new_question.question_body = structured_output["new_question"]
+        new_question.save
       end
-
-      client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY"))
-
-      api_response = client.chat(
-        parameters: {
-          model: ENV.fetch("OPENAI_MODEL"),
-          messages: message_list
-        }
-      )
-
-      new_question = Question.new
-      new_question.enrollment_id = the_question.enrollment_id
-      new_question.question_body = api_response.fetch("choices").at(0).fetch("message").fetch("content")
-      new_question.save
 
       redirect_to("/exam/#{the_question.enrollment_id}", { :notice => "Question created successfully." })
     else

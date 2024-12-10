@@ -16,28 +16,16 @@
     <dd><%= @enrollment.course.system_prompt %>
   </div>
 <% @enrollment.questions.each do |question| %>
-  <% unless question.feedback.empty? %>
-  <div>
-    <dt>Feedback</dt>
-    <dd><%= question.question_body %></dd>
-  </div>
-  <% end %>
   <div>
     <dt>Question</dt>
     <dd><%= question.question_body %></dd>
   </div>
-  <% unless question.score.empty? %>
-  <div>
-    <dt>Score</dt>
-    <dd><%= question.score %></dd>
-  </div>
-  <% end %>
 
-  <% if question.student_answer.empty? %>
+  <% if question.student_answer.blank? %>
   <div>
     <dt>Student Answer</dt>
     <dd>
-      <form action="/question_update/<%= question.id %>" method="post">
+      <form action="/modify_question/<%= question.id %>" method="post">
         <textarea id="student_answer_box" name="query_student_answer" rows="3"></textarea>
         <button>Create message</button>
       </form>
@@ -47,6 +35,19 @@
   <div>
     <dt>Student Answer</dt>
     <dd><%= question.student_answer %></dd>
+  </div>
+  <% end %>
+
+  <% unless question.feedback.blank? %>
+  <div>
+    <dt>Feedback</dt>
+    <dd><%= question.feedback %></dd>
+  </div>
+  <% end %>
+  <% unless question.score.blank? %>
+  <div>
+    <dt>Score</dt>
+    <dd><%= question.score %></dd>
   </div>
   <% end %>
 <% end %>

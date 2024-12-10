@@ -15,7 +15,7 @@ class Question < ApplicationRecord
 
   validates :enrollment_id, presence: true
   validates :question_body, presence: true
-  validates :score, numericality: { less_than_or_equal_to: 5, greater_than_or_equal_to: 0 }
+  validates :score, numericality: { less_than_or_equal_to: 5, greater_than_or_equal_to: 0, allow_blank: true }
   
   belongs_to :enrollment
   
