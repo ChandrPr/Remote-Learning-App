@@ -1,15 +1,13 @@
-<h1>Course #<%= @the_course.name %> details</h1>
+<h1>Course <%= @the_course.name %> details</h1>
 
 <div>
   <a href="/student_home">Home</a>
-  <% enrollment = Enrollment.where({ :course_id => @the_course.id }).where({ :student_id => current_student.id }).first %>
-  <% if enrollment.nil? %>
+  <% if @enrollment.nil? %>
     <a href="/insert_enrollment/<%= @the_course.id %>/<%= current_student.id %>">Enroll in course!</a>
   <% else %>
-    <a href="/enrollments/<%= enrollment.id %>">Go to Enrollment</a>
+    <a href="/enrollments/<%= @enrollment.id %>">Go to Enrollment</a>
   <% end %>
 </div>
-<% end %>
 
 <dl>
   <dt>Name</dt>

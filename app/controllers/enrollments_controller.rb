@@ -45,7 +45,7 @@ class EnrollmentsController < ApplicationController
 
   private def authenticate_student_or_instructor
     unless student_signed_in? || instructor_signed_in?
-      :authenticate_instructor!
+      redirect_to new_student_session_path
     end
   end
   

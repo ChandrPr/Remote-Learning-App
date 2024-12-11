@@ -37,7 +37,7 @@ class InstructorController < ApplicationController
     if the_sample_question.valid?
       the_sample_question.save
       
-      the_course = Course.where({ :the_id => params.fetch("query_course_id") }).first
+      the_course = Course.where({ :id => params.fetch("query_course_id") }).first
       the_course.system_prompt << "\n\n#{params.fetch("query_question_body")}"
       the_course.save
 
@@ -50,7 +50,7 @@ class InstructorController < ApplicationController
   def samplequestion_destroy
     the_sample_question = SampleQuestion.where({ :id => params["path_id"] }).first
     
-    the_course = Course.where({ :the_id => the_sample_question.course_id }).first
+    the_course = Course.where({ :id => the_sample_question.course_id }).first
     the_course.system_prompt.slice!("\n\n#{the_sample_question.question_body}")
     the_course.save
 
