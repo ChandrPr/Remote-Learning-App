@@ -17,9 +17,6 @@
   <dt>Isactive</dt>
   <dd><%= @the_course.isactive %></dd>
 
-  <dt>System Prompt</dt>
-  <dd><%= @the_course.system_prompt %></dd>
-
   <dt>Created at</dt>
   <dd><%= time_ago_in_words(@the_course.created_at) %> ago</dd>
 
@@ -71,7 +68,6 @@
       <th>Name</th>
       <th>Doc URL</th>
       <th>Doctype</th>
-      <th>Upload to LLM?</th>
       <th>Created at</th>
       <th>Updated at</th>
       <th></th>
@@ -90,7 +86,6 @@
           <option value="docx">DOCX</option>
         </select>
       </td>
-      <td><input type="checkbox" id="uploadto_llm_box" name="query_uploadto_llm" checked></td>
       <td></td>
       <td></td>
       <td><button>Create document</button></td>
@@ -106,7 +101,6 @@
         <% end %>
       </td>
       <td><%= document.doctype %></td>
-      <td><%= document.uploadto_llm %></td>
       <td><%= time_ago_in_words(document.created_at) %> ago</td>
       <td><%= time_ago_in_words(document.updated_at) %> ago</td>
       <td><a href="/delete_document/<%= document.id %>">Delete</a></td>

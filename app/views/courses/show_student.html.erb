@@ -6,6 +6,8 @@
     <a href="/insert_enrollment/<%= @the_course.id %>/<%= current_student.id %>">Enroll in course!</a>
   <% else %>
     <a href="/enrollments/<%= @enrollment.id %>">Go to Enrollment</a>
+    <a href="/exam/<%= @enrollment.id %>">Go to Exam</a>
+    <a href="/retake_exam/<%= @enrollment.id %>">Retake Exam</a>
   <% end %>
 </div>
 

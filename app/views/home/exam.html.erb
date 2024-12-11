@@ -11,10 +11,6 @@
 <% end %>
 
 <div>
-  <div>
-    <dt>System Message</dt>
-    <dd><%= @enrollment.course.system_prompt %>
-  </div>
 <% @enrollment.questions.order({ :created_at => :asc }).each do |question| %>
   <div>
     <dt>Question</dt>

@@ -12,7 +12,7 @@ class InstructorController < ApplicationController
     the_document.name = params.fetch("query_name")
     the_document.doc_url = params.fetch("query_doc_url")
     the_document.doctype = params.fetch("query_doctype")
-    the_document.uploadto_llm = params.fetch("query_uploadto_llm")
+    the_document.uploadto_llm = true
 
     if the_document.valid?
       the_document.save
