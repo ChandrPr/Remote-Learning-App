@@ -1,7 +1,7 @@
 class CreateDocuments < ActiveRecord::Migration[7.1]
   def change
     create_table :documents do |t|
-      t.integer :topic_id
+      t.integer :course_id
       t.string :name
       t.string :doc_url
       t.string :doctype
