@@ -7,7 +7,6 @@
     <th>ID</th>
     <th>Name</th>
     <th>Instructor</th>
-    <th>Isactive</th>
     <th>Created at</th>
     <th>Updated at</th>
     <th></th>
@@ -17,8 +16,7 @@
   <tr>
     <td><%= a_course.id %></td>
     <td><%= a_course.name %></td>
-    <td><%= a_course.instructor_id %></td>
-    <td><%= a_course.isactive %></td>
+    <td><%= a_course.instructor.name %></td>
     <td><%= time_ago_in_words(a_course.created_at) %> ago</td>
     <td><%= time_ago_in_words(a_course.updated_at) %> ago</td>
     <td><a href="/courses/<%= a_course.id %>">Show details</a></td>

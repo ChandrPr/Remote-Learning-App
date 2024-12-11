@@ -12,22 +12,23 @@
 
   <body>
     <nav>
-      <a href="/">Home</a>
+      <% if instructor_signed_in? %>
+        <a href="/instructor_home">Home</a>
+      <% elsif student_signed_in? %>
+        <a href="/student_home">Home</a>
+      <% end %>
       <a href="/courses">Courses</a>
     </nav>
     <nav>
-      <a href="/student_home">Student Home</a>
-      <a href="/students/sign_up">Student Sign Up</a>
-      <a href="/students/sign_in">Student Sign In</a>
-      <a href="/students/sign_out">Student Sign Out</a>
-      <a href="/students/edit">Student Profile Edit</a>
-    </nav>
-    <nav>
-      <a href="/instructor_home">Instructor Home</a>
-      <a href="/instructors/sign_up">Instructor Sign Up</a>
-      <a href="/instructors/sign_in">Instructor Sign In</a>
-      <a href="/instructors/sign_out">Instructor Sign Out</a>
-      <a href="/instructors/edit">Instructor Profile Edit</a>
+      <% if student_signed_in? %>
+        <a href="/students/sign_out">Sign Out</a>
+        <a href="/students/edit">Profile Edit</a>
+      <% elsif instructor_signed_in? %>
+        <a href="/instructors/sign_out">Sign Out</a>
+        <a href="/instructors/edit">Profile Edit</a>
+      <% else %>
+        <a href="/">Login</a>
+      <% end %>
     </nav>
 
     <p class="notice"><%= notice %></p>

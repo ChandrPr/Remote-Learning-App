@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_student_or_instructor
 
   def index
-    @list_of_courses = Course.all.order({ :created_at => :desc })
+    @list_of_courses = Course.where({ :isactive => true }).order({ :created_at => :desc })
     render({ :template => "courses/index" })
   end
 
