@@ -36,6 +36,11 @@ class InstructorController < ApplicationController
 
     if the_sample_question.valid?
       the_sample_question.save
+      
+      the_course = Course.where({ :the_id => params.fetch("query_course_id") }).first
+      the_course.system_prompt << "\n\n#{params.fetch("query_question_body")}"
+      the_course.save
+
       redirect_to("/courses/#{the_sample_question.course_id}", { :notice => "Sample question created successfully." })
     else
       redirect_to("/courses/#{the_sample_question.course_id}", { :alert => the_sample_question.errors.full_messages.to_sentence })
@@ -44,9 +49,14 @@ class InstructorController < ApplicationController
 
   def samplequestion_destroy
     the_sample_question = SampleQuestion.where({ :id => params["path_id"] }).first
-    course_id = the_sample_question.course_id
+    
+    the_course = Course.where({ :the_id => the_sample_question.course_id }).first
+    the_course.system_prompt.slice!("\n\n#{the_sample_question.question_body}")
+    the_course.save
+
     the_sample_question.destroy
-    redirect_to("/courses/#{course_id}", { :notice => "Sample question deleted successfully."} )
+
+    redirect_to("/courses/#{the_course.id}", { :notice => "Sample question deleted successfully."} )
   end
 
   def question_destroy

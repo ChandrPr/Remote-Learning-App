@@ -1,27 +1,11 @@
-<h1>Course #<%= @the_course.id %> details</h1>
-<% if student_signed_in? %>
-<% end %>
+<h1>Course #<%= @the_course.name %> details</h1>
 
-<% if instructor_signed_in? %>
 <div>
-  <a href="/instructor_home">Instructor Home</a>
+  <a href="/instructor_home">Home</a>
   <% if current_instructor.id == @the_course.instructor_id %>
     <a href="/delete_course/<%= @the_course.id %>">Delete course</a>
   <% end %>
 <div>
-<% end %>
-
-<% if student_signed_in? %>
-<div>
-  <a href="/student_home">Student Home</a>
-  <% enrollment = Enrollment.where({ :course_id => @the_course.id }).where({ :student_id => current_student.id }).first %>
-  <% if enrollment.nil? %>
-    <a href="/insert_enrollment/<%= @the_course.id %>/<%= current_student.id %>">Enroll in course!</a>
-  <% else %>
-    <a href="/enrollments/<%= enrollment.id %>">Go to Enrollment</a>
-  <% end %>
-</div>
-<% end %>
 
 <dl>
   <dt>Name</dt>
@@ -33,6 +17,9 @@
   <dt>Isactive</dt>
   <dd><%= @the_course.isactive %></dd>
 
+  <dt>System Prompt</dt>
+  <dd><%= @the_course.system_prompt %></dd>
+
   <dt>Created at</dt>
   <dd><%= time_ago_in_words(@the_course.created_at) %> ago</dd>
 
@@ -42,7 +29,7 @@
 
 <hr>
 
-<% if instructor_signed_in? && current_instructor.id == @the_course.instructor_id %>
+<% if current_instructor.id == @the_course.instructor_id %>
 <div>
   <h2>Edit course</h2>
 

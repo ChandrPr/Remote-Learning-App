@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_student_or_instructor
+
   def index
     @list_of_courses = Course.all.order({ :created_at => :desc })
     render({ :template => "courses/index" })
@@ -6,10 +8,15 @@ class CoursesController < ApplicationController
 
   def show
     @the_course = Course.where({ :id => params["path_id"] }).first
-    @instructors = Instructor.all.order({ :name => :asc })
     @documents = Document.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
-    @sample_questions = SampleQuestion.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
-    render({ :template => "courses/show" })
+
+    if instructor_signed_in?
+      @instructors = Instructor.all.order({ :name => :asc })
+      @sample_questions = SampleQuestion.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
+      render({ :template => "courses/show_instructor"})
+    elsif student_signed_in?
+      render({ :template => "courses/show_student" })
+    end
   end
 
   def create
@@ -19,9 +26,7 @@ class CoursesController < ApplicationController
     the_course.isactive = params.fetch("query_isactive", false)
     the_course.system_prompt = "You are an instructor on #{params.fetch("query_name")}. Ask questions to a student, then evaluate their response, provide feedback to the student as well as a score out of 5. This is an exam setting. Do not engage with the student on irrelevant answers. Totally irrelevant or nonsensical answers should get a score of 0.
     
-        Here are some examples of questions that you can ask. Use these to set the difficulty of the questions and the scope of the questions:
-        
-    "
+        Here are some examples of questions that you can ask. Use these to set the difficulty of the questions and the scope of the questions:"
 
     if the_course.valid?
       the_course.save
@@ -49,4 +54,12 @@ class CoursesController < ApplicationController
     Course.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/courses", { :notice => "Course deleted successfully."} )
   end
+
+
+  private def authenticate_student_or_instructor
+    unless student_signed_in? || instructor_signed_in?
+      :authenticate_instructor!
+    end
+  end
+  
 end

@@ -1,0 +1,60 @@
+<h1>Course #<%= @the_course.name %> details</h1>
+
+<div>
+  <a href="/student_home">Home</a>
+  <% enrollment = Enrollment.where({ :course_id => @the_course.id }).where({ :student_id => current_student.id }).first %>
+  <% if enrollment.nil? %>
+    <a href="/insert_enrollment/<%= @the_course.id %>/<%= current_student.id %>">Enroll in course!</a>
+  <% else %>
+    <a href="/enrollments/<%= enrollment.id %>">Go to Enrollment</a>
+  <% end %>
+</div>
+<% end %>
+
+<dl>
+  <dt>Name</dt>
+  <dd><%= @the_course.name %></dd>
+
+  <dt>Instructor</dt>
+  <dd><%= @the_course.instructor.name %></dd>
+
+  <dt>Isactive</dt>
+  <dd><%= @the_course.isactive %></dd>
+
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@the_course.created_at) %> ago</dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@the_course.updated_at) %> ago</dd>
+</dl>
+
+<hr>
+
+<div>
+  <h2>Course Documents</h2>
+
+  <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Doc URL</th>
+      <th>Doctype</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+    </tr>
+
+    <% @documents.each do |document| %>
+    <tr>
+      <td><%= document.name %></td>
+      <td>
+        <% if document.doc_url != "" %>
+          <a href="<%= document.doc_url %>" target="_blank">Link</a>
+        <% end %>
+      </td>
+      <td><%= document.doctype %></td>
+      <td><%= time_ago_in_words(document.created_at) %> ago</td>
+      <td><%= time_ago_in_words(document.updated_at) %> ago</td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<hr>

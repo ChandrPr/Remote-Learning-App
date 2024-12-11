@@ -1,4 +1,5 @@
 class EnrollmentsController < ApplicationController
+  before_action :authenticate_student_or_instructor
 
   def show
     @the_enrollment = Enrollment.where({ :id => params["path_id"] }).first
@@ -40,4 +41,12 @@ class EnrollmentsController < ApplicationController
     Enrollment.where({ :id => params["path_id"] }).first.destroy
     redirect_to("/student_home", { :notice => "Enrollment deleted successfully."} )
   end
+
+
+  private def authenticate_student_or_instructor
+    unless student_signed_in? || instructor_signed_in?
+      :authenticate_instructor!
+    end
+  end
+  
 end
