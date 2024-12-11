@@ -149,4 +149,31 @@
 </div>
 <hr>
 
+<div>
+  <h2>Course Enrollments</h2>
+
+  <table border="1">
+    <tr>
+      <th>Student</th>
+      <th>Status</th>
+      <th>Grade</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th></th>
+    </tr>
+
+    <% @enrollments.each do |enrollment| %>
+    <tr>
+      <td><%= enrollment.student.name %></td>
+      <td><%= enrollment.status %></td>
+      <td><%= enrollment.grade %></td>
+      <td><%= time_ago_in_words(enrollment.created_at) %> ago</td>
+      <td><%= time_ago_in_words(enrollment.updated_at) %> ago</td>
+      <td><a href="/enrollments/<%= enrollment.id %>">Show details</a></td>
+    </tr>
+    <% end %>
+  </table>
+
+</div>
+
 <% end %>

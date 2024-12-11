@@ -42,7 +42,6 @@ class EnrollmentsController < ApplicationController
     redirect_to("/student_home", { :notice => "Enrollment deleted successfully."} )
   end
 
-
   private def authenticate_student_or_instructor
     unless student_signed_in? || instructor_signed_in?
       redirect_to new_student_session_path

@@ -12,6 +12,15 @@ class StudentController < ApplicationController
     render({ :template => "home/exam"})
   end
 
+  def retake_exam
+    Question.where({ :enrollment_id => params["enrollment_id"] }).destroy_all
+    enrollment = Enrollment.where({ :id => params["enrollment_id"] }).first
+    enrollment.status = "In Progress"
+    enrollment.grade = 0
+    enrollment.save
+    redirect_to("/enrollments/#{params["enrollment_id"]}", { :notice => "Exam has been cleared."} )
+  end
+
   def JSON_OpenAIcall(message_list)
 
     request_headers_hash = {

@@ -17,6 +17,7 @@ class Enrollment < ApplicationRecord
   validates :status, presence: true
   validates :status, inclusion: { in: [ "In Progress", "On Hold", "Passed", "Failed", "Incomplete" ] }
   validates :grade, numericality: { less_than_or_equal_to: 100, greater_than_or_equal_to: 0, allow_blank: true }
+  validates :student_id, uniqueness: { scope: ["course_id"], message: "You have already enrolled for this course." }
 
   belongs_to :course
   belongs_to :student

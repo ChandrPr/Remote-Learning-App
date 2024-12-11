@@ -13,6 +13,7 @@ class CoursesController < ApplicationController
     if instructor_signed_in?
       @instructors = Instructor.all.order({ :name => :asc })
       @sample_questions = SampleQuestion.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
+      @enrollments = Enrollment.where({ :course_id => params["path_id"] }).order({ :created_at => :desc })
       render({ :template => "courses/show_instructor" })
     elsif student_signed_in?
       @enrollment = Enrollment.where({ :course_id => params["path_id"] }).where({ :student_id => current_student.id }).first

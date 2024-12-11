@@ -5,6 +5,7 @@
   <% if student_signed_in? && current_student.id == @the_enrollment.student_id %>
     <a href="/delete_enrollment/<%= @the_enrollment.id %>">Delete enrollment</a>
     <a href="/exam/<%= @the_enrollment.id %>">Go to Exam</a>
+    <a href="/retake_exam/<%= @the_enrollment.id %>">Retake Exam</a>
   <% end %>
 </div>
 
