@@ -46,11 +46,11 @@
     <div>
       <label for="status_box">Status</label>
       <select name="query_status" id="status_box">
-        <option value="In Progress">In Progress</option>
-        <option value="On Hold">On Hold</option>
-        <option value="Passed">Passed</option>
-        <option value="Failed">Failed</option>
-        <option value="Incomplete">Incomplete</option>
+        <option value="In Progress" <%= "selected" if @the_enrollment.status == "In Progress" %>>In Progress</option>
+        <option value="On Hold" <%= "selected" if @the_enrollment.status == "On Hold" %>>On Hold</option>
+        <option value="Passed" <%= "selected" if @the_enrollment.status == "Passed" %>>Passed</option>
+        <option value="Failed" <%= "selected" if @the_enrollment.status == "Failed" %>>Failed</option>
+        <option value="Incomplete" <%= "selected" if @the_enrollment.status == "Incomplete" %>>Incomplete</option>
       </select>
     </div>
 
